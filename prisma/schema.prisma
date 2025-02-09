@@ -1,0 +1,122 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgres"
+  url      = env("DATABASE_URL")
+}
+
+model User{
+  id String @id @default(uuid())
+  clerkId String @unique 
+  firstName String? 
+  lastName String?
+  email String @unique
+  password String?
+  trial Boolean @default(false)
+  image String
+  studio  Media[]
+  subscription Subscription?
+  workspaces Workspace[]
+  members Member[]
+  notification Notification[]
+
+  sender Invite[] @relation("sender")
+  receiver Invite[] @relation("receiver")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+ enum PRESET{
+  HD
+  SD
+}
+model Media{
+  id String @id @default(uuid())
+  mic String?
+  screen String?
+  camera String?
+  preset PRESET @default(SD)
+  userId String
+  user User @relation(fields: [userId],references: [id])
+}
+enum Subscription_Plan {
+  FREE
+  PRO
+}
+model Subscription {
+  id String @id @default(uuid())
+  userId String @unique
+  user User @relation(fields: [userId],references: [id])
+  customerId String? @unique
+  createdAt DateTime @default(now())
+  plan Subscription_Plan @default(FREE)
+}
+enum Type{
+  PUBLIC
+  PERSONAL
+}
+model Workspace {
+  id String @id @default(uuid())
+  type Type
+  name String
+  createdAT DateTime @default(now())
+  userId String
+  user User @relation(fields: [userId],references: [id])
+  folders Folder[]
+  videos Video[]
+  members Member[]
+  invite Invite[]
+}
+model Folder{
+  id String @id @default(uuid())
+  name String @default("untitled folder")
+  createdAt DateTime @default(now())
+  videos Video[]
+  workspaceId String 
+  workspace Workspace @relation(fields: [workspaceId],references: [id])
+}
+model Video{
+  id String @id @default(uuid())
+  title String? @default("untitled video")
+  description String? @default("no description")
+  source String 
+  processing Boolean @default(true)
+  createdAt DateTime @default(now())
+  folderId String
+  folder Folder? @relation(fields: [folderId],references: [id],onDelete: Cascade)
+  workspaceId String
+  workspace Workspace? @relation(fields: [workspaceId],references: [id],onDelete: Cascade)
+  views Int @default(0)
+  summary String
+
+}
+model Member{
+  id String @id @default(uuid())
+  userId String
+  user User @relation(fields: [userId],references: [id])
+  createdAt DateTime @default(now())
+  workspaceId String
+  workspace Workspace @relation(fields: [workspaceId],references: [id])
+member Boolean @default(true)
+}
+model Notification {
+  id String @id @default(uuid())
+  content String
+  userId String
+  user User @relation(fields: [userId],references: [id])
+}
+model Invite{
+  id String @id @default(uuid())
+  senderId String 
+  sender User @relation("sender",fields: [senderId],references: [id])
+  receiverId String  
+  receiver User @relation("receiver",fields: [receiverId],references: [id])
+  content String
+  workspaceId String
+  workspace Workspace @relation(fields: [workspaceId],references: [id ])
+  isAccepted Boolean @default(false)
+}
