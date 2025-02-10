@@ -16,9 +16,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${manrope}`}>
-        <ClerkProvider>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={`${manrope}`}>
           <Provider
             attribute="class"
             defaultTheme="system"
@@ -27,8 +27,8 @@ export default function RootLayout({
           >
             {children}
           </Provider>
-        </ClerkProvider>
-      </body>
-    </html>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

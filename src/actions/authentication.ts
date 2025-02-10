@@ -30,7 +30,7 @@ export const onAuthenticateUser = async () => {
         if (!isUserExist) {
             const createUser = await client.user.create({
                 data: {
-                    firstName: user.id,
+                    firstName: user.firstName,
                     lastName: user.lastName,
                     email: user.emailAddresses[0].emailAddress,
                     image: user.imageUrl,
@@ -46,6 +46,10 @@ export const onAuthenticateUser = async () => {
                         }
                     }
 
+                },
+                include: {
+                    workspaces: true,
+                    subscription: true
                 }
             })
             return {
