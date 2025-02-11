@@ -14,10 +14,10 @@ export const onAuthenticateUser = async () => {
             },
             include: {
                 workspaces: {
-                    where: {
-                        user: {
-                            clerkId: user?.id
-                        }
+                    select: {
+                        id: true,
+                        name: true,
+                        type: true
                     }
                 },
                 subscription: {
@@ -48,15 +48,29 @@ export const onAuthenticateUser = async () => {
 
                 },
                 include: {
-                    workspaces: true,
-                    subscription: true
+                    workspaces: {
+                        select: {
+                            id: true,
+                            type: true,
+                            name: true
+                        },
+
+                    },
+                    subscription: {
+                        select: {
+                            id: true,
+                            plan: true
+                        }
+                    }
                 }
             })
+            console.log("if created:", createUser)
             return {
                 status: 201,
                 user: createUser
             }
         }
+        console.log("if already exists:", isUserExist)
         return {
             status: 200,
             user: isUserExist
@@ -64,6 +78,7 @@ export const onAuthenticateUser = async () => {
         }
     } catch (error) {
         return {
+            message: `${error}`,
             status: 500
         }
     }

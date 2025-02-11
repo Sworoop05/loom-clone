@@ -2,8 +2,8 @@ import React from "react";
 
 type Props = { params: { slug: string } };
 
-const page = ({ params }: Props) => {
-  return <div>hello {params.slug}</div>;
+const page = () => {
+  return <div>hello</div>;
 };
 
 export default page;
