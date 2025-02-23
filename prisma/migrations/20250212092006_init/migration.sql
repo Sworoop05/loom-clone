@@ -77,6 +77,7 @@ CREATE TABLE "Video" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "folderId" TEXT NOT NULL,
     "workspaceId" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
     "views" INTEGER NOT NULL DEFAULT 0,
     "summary" TEXT NOT NULL,
 
@@ -99,6 +100,7 @@ CREATE TABLE "Notification" (
     "id" TEXT NOT NULL,
     "content" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Notification_pkey" PRIMARY KEY ("id")
 );
@@ -144,6 +146,9 @@ ALTER TABLE "Video" ADD CONSTRAINT "Video_folderId_fkey" FOREIGN KEY ("folderId"
 
 -- AddForeignKey
 ALTER TABLE "Video" ADD CONSTRAINT "Video_workspaceId_fkey" FOREIGN KEY ("workspaceId") REFERENCES "Workspace"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Video" ADD CONSTRAINT "Video_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Member" ADD CONSTRAINT "Member_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

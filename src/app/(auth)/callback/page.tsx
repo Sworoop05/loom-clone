@@ -1,4 +1,4 @@
-import { onAuthenticateUser } from "@/actions/authentication";
+import { onAuthenticateUser } from "@/actions/user";
 import { redirect } from "next/navigation";
 
 const CallbackPage = async () => {

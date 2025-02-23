@@ -1,16 +1,13 @@
 "use server";
 import React from "react";
-import { onAuthenticateUser } from "@/actions/authentication";
+import { onAuthenticateUser } from "@/actions/user";
 import { redirect } from "next/navigation";
-import { SignIn, SignInButton } from "@clerk/nextjs";
+
 const Page = async () => {
   const isAuth = await onAuthenticateUser();
-  console.log("control reache here", isAuth);
+
   if (!isAuth || !isAuth.user) return <div>{isAuth.message}</div>;
 
-  if (isAuth.status === 200 || isAuth.status === 201) {
-    redirect(`/dashboard/${isAuth.user?.workspaces[0].id}`);
-  }
   if (
     isAuth.status === 400 ||
     isAuth.status === 401 ||
@@ -19,7 +16,13 @@ const Page = async () => {
   ) {
     redirect(`/signin`);
   }
-  return <div>this the dashboard</div>;
+
+  // If authenticated and has workspaces, redirect to first workspace
+  if (isAuth.user.workspaces?.length) {
+    redirect(`/dashboard/${isAuth.user.workspaces[0].id}`);
+  }
+
+  return <div>this is the dashboard</div>;
 };
 
 export default Page;

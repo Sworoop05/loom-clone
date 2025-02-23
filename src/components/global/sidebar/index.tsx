@@ -53,7 +53,7 @@ const Sidebar = ({ activeWorkspaceId, initialData }: Props) => {
 
   //WIP: add the upgrade button
   const SideBar = (
-    <div className="bg-[#111111] flex-none relative p-4 pb-20 h-full w-[250px] flex flex-col gap-4 items-center ">
+    <div className="bg-[#111111] flex-none relative p-4 pb-20 h-full w-[250px] flex flex-col gap-4 items-center  ">
       <div className="bg-[#111111] absolute p-4 gap-2 justify-center items-center mb-4 top-0 left-0 right-0">
         <Logo />
       </div>
@@ -69,7 +69,11 @@ const Sidebar = ({ activeWorkspaceId, initialData }: Props) => {
             <SelectLabel>Workspaces</SelectLabel>
             <Separator />
             {workspace?.workspaces.map((workspace) => (
-              <SelectItem id={workspace.id} value={workspace.id}>
+              <SelectItem
+                id={workspace.id}
+                value={workspace.id}
+                key={workspace.id}
+              >
                 {workspace.name}
               </SelectItem>
             ))}
@@ -98,7 +102,7 @@ const Sidebar = ({ activeWorkspaceId, initialData }: Props) => {
             <Search workspaceId={activeWorkspaceId} />
           </Modal>
         )}
-      <p className="w-full text-[#9D9D9D] font-bold mt-4">Menu</p>
+      <p className="w-full text-[#9D9D9D] font-bold ">Menu</p>
       <nav className="w-full ">
         {menuItems.map((item) => (
           <SidebarItems
@@ -173,7 +177,7 @@ const Sidebar = ({ activeWorkspaceId, initialData }: Props) => {
     </div>
   );
   return (
-    <div className="w-full">
+    <div className="w-[250px] ">
       <Infobar />
       <div className="md:hidden fixed my-4">
         <Sheet>
