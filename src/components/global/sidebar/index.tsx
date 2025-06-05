@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import { userQueryData } from "@/hooks/userQueryData";
+import { useQueryData } from "@/hooks/useQueryData";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import Modal from "../modal";
@@ -27,6 +27,7 @@ import GlobalCard from "../GlobalCard/GlobalCard";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Infobar from "../Info-bar";
+import { cn } from "@/lib/utils";
 
 type Props = {
   activeWorkspaceId: string;
@@ -35,8 +36,8 @@ type Props = {
 
 const Sidebar = ({ activeWorkspaceId, initialData }: Props) => {
   const router = useRouter();
-  const { data, isFetched } = userQueryData(["user-workspaces"], getWorkspaces);
-  const { data: notifications } = userQueryData(
+  const { data, isFetched } = useQueryData(["user-workspaces"], getWorkspaces);
+  const { data: notifications } = useQueryData(
     ["user-notifications"],
     getNotification
   );
@@ -44,6 +45,7 @@ const Sidebar = ({ activeWorkspaceId, initialData }: Props) => {
   const workspace = (data as WorkspaceProp)?.data ?? initialData?.data;
   const pathName = usePathname();
   const menuItems = Menu_Items(activeWorkspaceId);
+  const [isSelectOpen, setIsSelectOpen] = React.useState(false);
   const onChangeWorkspaceValue = (value: string) => {
     router.push(`/dashboard/${value}`);
   };
@@ -53,13 +55,19 @@ const Sidebar = ({ activeWorkspaceId, initialData }: Props) => {
 
   //WIP: add the upgrade button
   const SideBar = (
-    <div className="bg-[#111111] flex-none relative p-4 pb-20 h-full w-[250px] flex flex-col gap-4 items-center  ">
+    <div
+      className={cn(
+        "bg-[#111111] flex-none relative p-4 pb-20 h-full w-[250px] flex flex-col gap-4 items-center",
+        isSelectOpen && "pb-32"
+      )}
+    >
       <div className="bg-[#111111] absolute p-4 gap-2 justify-center items-center mb-4 top-0 left-0 right-0">
         <Logo />
       </div>
       <Select
         defaultValue={activeWorkspaceId}
         onValueChange={onChangeWorkspaceValue}
+        onOpenChange={setIsSelectOpen}
       >
         <SelectTrigger className="m-16 text-neutral-400 bg-transparent">
           <SelectValue placeholder="select a workspace"></SelectValue>

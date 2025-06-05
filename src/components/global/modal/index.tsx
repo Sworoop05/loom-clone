@@ -29,7 +29,7 @@ const index = ({ trigger, children, title, description, className }: Props) => {
         </DialogHeader>
 
         <div className="w-full flex flex-col ">
-          <div>{children}</div>
+          {children && <div>{children}</div>}
         </div>
       </DialogContent>
     </Dialog>

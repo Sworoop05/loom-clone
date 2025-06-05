@@ -32,3 +32,31 @@ export type NotificationProps = {
         }
     }
 }
+export type folderProps = {
+    data: {
+        status: number,
+        name: string,
+        _count: {
+            videos: number
+        }
+    }
+}
+export type VideosProp = {
+    status: number,
+    data: {
+        User: {
+            firstName: string | null
+            lastName: string | null
+            image: string | null
+        } | null
+        id: string,
+        processing: boolean,
+        Folder: {
+            id: string,
+            name: string
+        } | null
+        createdAt: Date
+        title: string | null
+        source: string
+    }[]
+}

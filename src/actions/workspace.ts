@@ -103,7 +103,7 @@ export const getAllUserVideos = async (workspaceId: string) => {
         if (userVideos && userVideos.length > 0) {
             return {
                 status: 200,
-                daat: userVideos
+                data: userVideos
             }
         }
         return {

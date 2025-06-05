@@ -7,7 +7,7 @@ type Props = {
   color?: string;
 };
 
-const Loader = ({ children, state, size, color }: Props) => {
+const Loader = ({ children, state, size = "md", color = "blue" }: Props) => {
   return state ? <Spinner size={size} color={color} /> : children;
 };
 

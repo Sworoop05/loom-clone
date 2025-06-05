@@ -1,7 +1,7 @@
 "use client";
 import React, { EventHandler } from "react";
 import { useState, useEffect } from "react";
-import { userQueryData } from "./userQueryData";
+import { useQueryData } from "./useQueryData";
 import { searchUsers } from "@/actions/user";
 const useSearch = (key: string, type: "USERS") => {
   const [query, setQuery] = useState("");
@@ -28,7 +28,7 @@ const useSearch = (key: string, type: "USERS") => {
     }, 1000);
     return () => clearTimeout(setTimer);
   }, [query]);
-  const { refetch, isFetching } = userQueryData(
+  const { refetch, isFetching } = useQueryData(
     [key, debounce],
     async ({ queryKey }) => {
       if (type === "USERS") {

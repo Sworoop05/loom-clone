@@ -65,13 +65,12 @@ export const onAuthenticateUser = async () => {
                     }
                 }
             })
-            // console.log("if created:", createUser)
+          
             return {
                 status: 201,
                 user: createUser
             }
         }
-        // console.log("if already exists:", isUserExist)
         return {
             status: 200,
             user: isUserExist

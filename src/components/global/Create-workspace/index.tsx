@@ -1,6 +1,6 @@
 "use client";
 import { getWorkspaces } from "@/actions/workspace";
-import { userQueryData } from "@/hooks/userQueryData";
+import { useQueryData } from "@/hooks/useQueryData";
 import { Workspace } from "@/types/index.type";
 import React from "react";
 import Modal from "../modal";
@@ -10,7 +10,7 @@ import WorkspaceForm from "../workspace-form";
 type Props = {};
 
 const CreateWorkspace = (props: Props) => {
-  const { data } = userQueryData(["user-workspaces"], getWorkspaces);
+  const { data } = useQueryData(["user-workspaces"], getWorkspaces);
   const { data: plan } = data as {
     status: number;
     data: {

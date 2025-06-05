@@ -11,11 +11,15 @@ type props = {
   };
 };
 const page = async ({ params }: props) => {
-  const { workspace } = params;
+  const { workspace } = await params;
   return (
     <div>
       <Tabs defaultValue="videos" className="mt-6 ">
-        <div className={"flex w-full justify-between items-center"}>
+        <div
+          className={
+            "flex w-full justify-between items-center flex-wrap gap-10"
+          }
+        >
           <TabsList className="bg-transparent gap-2 pl-0">
             <TabsTrigger
               value={"videos"}

@@ -4,6 +4,8 @@ import { Manrope } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import Provider from "@/lib/Provider/themeProvider";
 import ReactQueryProvider from "@/react-query";
+import { ReduxProvider } from "@/redux/Provider";
+import { Toaster } from "sonner";
 const manrope = Manrope({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,14 +21,19 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={`${manrope}`}>
-          <Provider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <ReactQueryProvider>{children}</ReactQueryProvider>
-          </Provider>
+          <ReduxProvider>
+            <Provider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <ReactQueryProvider>
+                {children}
+                <Toaster />
+              </ReactQueryProvider>
+            </Provider>
+          </ReduxProvider>
         </body>
       </html>
     </ClerkProvider>

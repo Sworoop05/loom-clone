@@ -25,10 +25,8 @@ const layout = async ({ children, params }: Props) => {
   const auth = await onAuthenticateUser();
   if (!auth.user?.workspaces || !auth.user.workspaces.length)
     return redirect("/signin");
-  console.log(workspace);
   const hasAccess = await verifyWorkspaceAccess(workspace);
   if ([401, 500].includes(auth.status)) return redirect(`/dashboard`);
-  console.log(hasAccess);
   if (!hasAccess.data) return null;
   const query = new QueryClient();
   await query.prefetchQuery({
