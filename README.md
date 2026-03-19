@@ -1,30 +1,29 @@
-# 💸 Mero Paisa
+# 🎥 Loom Clone
 
-> A full-stack personal finance and transaction management application built with a modern monorepo architecture.
+> A full-stack screen recording and video sharing application — built as a feature clone of Loom, using Next.js, Prisma, and TypeScript.
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Next.js](https://img.shields.io/badge/Next.js_14-000000?style=flat-square&logo=next.js&logoColor=white)](https://nextjs.org/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat-square&logo=next.js&logoColor=white)](https://nextjs.org/)
 [![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=flat-square&logo=prisma&logoColor=white)](https://www.prisma.io/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
-[![Turborepo](https://img.shields.io/badge/Turborepo-EF4444?style=flat-square&logo=turborepo&logoColor=white)](https://turbo.build/)
 
 ---
 
 ## 📌 Overview
 
-**Mero Paisa** (meaning *My Money* in Nepali) is a full-stack transaction management app that helps users track, manage, and review personal finances. Built with **Next.js 14 App Router**, it leverages server actions for type-safe data mutations and a **Turborepo monorepo** structure for clean separation of concerns.
+**Loom Clone** is a full-stack web application inspired by Loom — the async video messaging platform. It allows users to record, share, and manage short video messages directly from their browser. Built with **Next.js App Router**, **Prisma ORM**, and **TypeScript**, it demonstrates real-world full-stack architecture patterns including media handling, auth flows, and persistent video storage.
 
 ---
 
 ## ✨ Features
 
-- 💰 Track income and expense transactions
-- 📊 View transaction history with filters and summaries
-- 🔐 Server-side validation with type-safe API routes via Next.js server actions
-- 🗃️ Relational data modelling with Prisma ORM and PostgreSQL
-- 🧩 Monorepo architecture with shared UI component library
-- 🎨 Clean, responsive UI built with Tailwind CSS and shadcn/UI
+- 🎬 **Screen / Camera Recording** — In-browser video recording via browser MediaRecorder API
+- 📤 **Video Upload & Storage** — Upload and persist recorded videos
+- 🔗 **Shareable Video Links** — Generate unique links to share recordings
+- 👤 **User Authentication** — Secure sign-in and session management
+- 🗂️ **Video Dashboard** — View, manage, and delete your recordings
+- 🗃️ **Database-backed** — Persistent data with Prisma and a relational database
+- 🎨 **Clean UI** — Built with Tailwind CSS and shadcn/UI components
 
 ---
 
@@ -32,28 +31,28 @@
 
 | Layer | Technology |
 |---|---|
-| Framework | Next.js 14 (App Router) |
+| Framework | Next.js (App Router) |
 | Language | TypeScript |
-| Database | PostgreSQL |
 | ORM | Prisma |
 | Styling | Tailwind CSS, shadcn/UI |
-| Monorepo | Turborepo |
-| Package Manager | pnpm |
+| Package Manager | Bun |
+| Linting | ESLint |
 
 ---
 
 ## 📁 Project Structure
 
 ```
-mero-paisa/
-├── apps/
-│   └── web/          # Next.js frontend + server actions
-├── packages/
-│   ├── ui/           # Shared React component library
-│   ├── db/           # Prisma schema & database client
-│   └── eslint-config/
-├── turbo.json
-└── package.json
+loom-clone/
+├── prisma/
+│   └── schema.prisma     # Database schema
+├── src/
+│   ├── app/              # Next.js App Router pages & layouts
+│   ├── components/       # Reusable UI components
+│   └── lib/              # Utilities, Prisma client, helpers
+├── public/               # Static assets
+├── tailwind.config.ts
+└── next.config.ts
 ```
 
 ---
@@ -62,29 +61,30 @@ mero-paisa/
 
 ### Prerequisites
 
-- Node.js 18+
-- PostgreSQL database
-- pnpm
+- Node.js 18+ or Bun
+- A PostgreSQL (or compatible) database
 
 ### Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/Sworoop05/Mero-paisa.git
-cd Mero-paisa
+git clone https://github.com/Sworoop05/loom-clone.git
+cd loom-clone
 
 # Install dependencies
-pnpm install
+bun install
+# or
+npm install
 
 # Set up environment variables
-cp apps/web/.env.example apps/web/.env
-# Add your DATABASE_URL to the .env file
+cp .env.example .env
+# Add your DATABASE_URL and any auth secrets
 
-# Push the database schema
-pnpm db:push
+# Push the Prisma schema to your database
+bunx prisma db push
 
 # Start the development server
-pnpm dev
+bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) to view the app.
@@ -94,7 +94,9 @@ Open [http://localhost:3000](http://localhost:3000) to view the app.
 ## 🔑 Environment Variables
 
 ```env
-DATABASE_URL="postgresql://user:password@localhost:5432/mero_paisa"
+DATABASE_URL="postgresql://user:password@localhost:5432/loom_clone"
+NEXTAUTH_SECRET=your_nextauth_secret
+NEXTAUTH_URL=http://localhost:3000
 ```
 
 ---
@@ -103,10 +105,10 @@ DATABASE_URL="postgresql://user:password@localhost:5432/mero_paisa"
 
 | Command | Description |
 |---|---|
-| `pnpm dev` | Start all apps in development mode |
-| `pnpm build` | Build all apps and packages |
-| `pnpm db:push` | Push Prisma schema to database |
-| `pnpm db:studio` | Open Prisma Studio |
+| `bun dev` | Start development server |
+| `bun build` | Build for production |
+| `bunx prisma studio` | Open Prisma Studio |
+| `bunx prisma db push` | Sync schema to database |
 
 ---
 
